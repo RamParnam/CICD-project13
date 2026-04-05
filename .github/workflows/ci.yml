@@ -34,6 +34,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-automated-app:latest
-            docker stop $(docker ps -q) || true
-            docker rm $(docker ps -aq) || true
-            docker run -d -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/my-automated-app:latest
+            docker ps -q | xargs -r docker stop
+            docker ps -aq | xargs -r docker rm
+            docker run -d -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/my-automatedi-app:latest
